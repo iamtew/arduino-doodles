@@ -37,16 +37,18 @@ void setup()
 
 void loop()
 {
-	const int intDelay = 500;
+	const int intDelay = 20;
+  int xoff = 160;
+  int yoff = 100;
 
   int x,y,z,k;
-  for (int z=4; z<3000; z+2)
+  for (int z=50; z<100; z++)
   {
     for (int x=0; x<8; x++)
     {
       for (int y=0; y<8; y++)
       {
-        k = (x * y / z) % 2;
+        k = ((x + xoff) * (y + yoff) / z) % 2;
         if (k == 1)
         {
           lc.setLed(0, x, y, true);
@@ -59,6 +61,7 @@ void loop()
       // printf("\n");
     }
   }
+  loop();
 }
 
 
