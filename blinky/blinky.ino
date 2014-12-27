@@ -4,7 +4,6 @@
 
 #include "LedControl.h"
 
-int Intensity = 2; // Intensity between 0 to 15
 /*
  * Create a new controler
  * Params :
@@ -19,7 +18,9 @@ int Intensity = 2; // Intensity between 0 to 15
 int dataPin = 10;
 int clockPin = 12;
 int csPin = 11;
-int numDevices = 2;
+
+int numDevices = 1;
+int Intensity = 0; // Intensity between 0 to 15
 
 LedControl lc=LedControl(dataPin, clockPin, csPin, numDevices);
 
@@ -36,40 +37,29 @@ void setup()
 
 void loop()
 {
-	const int intDelay = 25;
+	const int intDelay = 500;
 
-  for (int row=0; row<8; row++)
+  int x,y,z,k;
+  for (int z=4; z<3000; z+2)
   {
-    for (int col=0; col<8; col++)
+    for (int x=0; x<8; x++)
     {
-    	for (int d = 0; d < numDevices; d++)
-    	{
-    		if (d % 1)
-    		{
-      		lc.setLed(d, col,row,true); // turns on LED at col, row
-      	} else {
-      		lc.setLed(d, col,row,false); // turns on LED at col, row
-      	}
+      for (int y=0; y<8; y++)
+      {
+        k = (x * y / z) % 2;
+        if (k == 1)
+        {
+          lc.setLed(0, x, y, true);
+        } else {
+          lc.setLed(0, x, y, false);
+        }
+        // printf(" %d", k);
       }
       delay(intDelay);
-    }
-  }
-
-  for (int row=0; row<8; row++)
-  {
-    for (int col=0; col<8; col++)
-    {
-    	for (int d = 0; d < numDevices; d++)
-    	{
-    		if (d % 1)
-    		{
-      		lc.setLed(d, col,row,false); // turns on LED at col, row
-      	} else {
-      		lc.setLed(d, col,row,true); // turns on LED at col, row
-      	}
-      }
-      delay(intDelay);
+      // printf("\n");
     }
   }
 }
+
+
 
